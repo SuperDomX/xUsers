@@ -27,7 +27,8 @@
   					'online'		=> array('Type' => 'int(11)'),
   					'newsletter'	=> array('Type' => 'int(11)'),
   					'name'			=> array('Type' => 'varchar(255)'),
-  					'picture_src'	=> array('Type' => 'varchar(255)')
+  					'picture_src'	=> array('Type' => 'varchar(255)'),
+  					'stripe_id'		=> array('Type' => 'varchar(255)')
 				)
 			);
 		}
