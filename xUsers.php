@@ -1,15 +1,17 @@
 <?php
 /**
  *
- * @author XtIV
+ * @author heylisten@xtiv.net
  * @name Users
  * @desc User Management
- * @version v1.0.11.10.25.01.17
+ * @version v1.1.0
  * @icon Contacts2.png
  * @mini users
  * @link users
  * @see community
  * @todo
+ * @release alpha
+ * @alpha true
  */
 	class xUsers extends Xengine{
 		function dbSync(){
