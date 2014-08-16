@@ -4,7 +4,7 @@
  * @author heylisten@xtiv.net
  * @name Users
  * @desc User Management
- * @version v1.1.3
+ * @version v1.1.4
  * @icon Contacts2.png
  * @mini users
  * @link users
@@ -141,7 +141,8 @@
 			$w['address_id'] = $id;
 
 			// User address not yet linked to user, so link it. 
-			if( empty( $q->Select('id','Users_Addresses', $w) ) )
+			$address = $q->Select('id','Users_Addresses', $w);
+			if( empty( $address ) )
 				$q->Insert('Users_Addresses', $w);
 
 			return array(
