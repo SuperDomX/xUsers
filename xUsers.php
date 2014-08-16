@@ -4,7 +4,7 @@
  * @author heylisten@xtiv.net
  * @name Users
  * @desc User Management
- * @version v1.1.2
+ * @version v1.1.3
  * @icon Contacts2.png
  * @mini users
  * @link users
