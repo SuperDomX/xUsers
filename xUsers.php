@@ -4,7 +4,7 @@
  * @author heylisten@xtiv.net
  * @name Users
  * @desc User Management
- * @version v1.1.1
+ * @version v1.1.2
  * @icon Contacts2.png
  * @mini users
  * @link users
@@ -33,7 +33,7 @@
   					'stripe_id'		=> array('Type' => 'varchar(255)')
 				),
 
-				'user_addresses' => array(
+				'Users_Addresses' => array(
 					'user_id'    => array('Type' => 'int(8)'),
 					'address_id' => array('Type' => 'int(8)')
 				),
@@ -118,10 +118,13 @@
 		}
 
 		function idEmail($e){
-			$e['email']	  = $e;
+			$e = array(
+				'email' => $e
+			);
+
 			$q            = $this->q();
 			$id           = $q->Select('id','Users',$e);
-			$id           = ( empty($id[0]['id']) ) ? $q->Insert('Users', $e) : $id[0]['id']; 
+			$id           = ( empty($id) ) ? $q->Insert('Users', $e) : $id[0]['id']; 
 
 			return array(
 				'success' => $id,
@@ -129,22 +132,36 @@
 			); 
 		}
 
-		protected function idAddress($a,$user_id){
+		protected function idAddress($a,$uid){
 			$q            = $this->q();
 			$id           = $q->Select('id','Addresses',$a);
 			$id           = ( empty($id[0]['id']) ) ? $q->Insert('Addresses', $a) : $id[0]['id']; 
 
-			$w['user_id']    = $user_id;
+			$w['user_id']    = $uid;
 			$w['address_id'] = $id;
 
 			// User address not yet linked to user, so link it. 
-			if( empty( $q->Select('id','user_addresses', $w) ) )
-				$q->Insert('user_addresses', $w);
+			if( empty( $q->Select('id','Users_Addresses', $w) ) )
+				$q->Insert('Users_Addresses', $w);
 
 			return array(
 				'success' => $id,
 				'error'   => $q->error
 			); 
+		}
+
+		protected function getUsersAddresses($id){
+			$q        = $this->q();
+
+			$a        = $q->Select('address_id','Users_Addresses',array(
+				'user_id' => $id
+			))[0];
+			
+			$a        = $q->Select('*','Addresses',array(
+				'id' => $a['address_id']
+			));
+
+			return $a[0];
 		}
 
 		function index(){
