@@ -203,21 +203,60 @@
 			$this->set('users',	$all_users);
 		}
 
-		function avatar($username){
+		function avatar($action=null){
 
-			$picture = "./bin/images/icons/48x48/user.png";
 
-			$user = $this->q()->Select('picture_src','Users',array(
-				'username'	=> $username
-			));
 
-			if($user[0]['picture_src'] != ''){
-				$picture = $user[0]['picture_src'];
+			$user_pics = SVR_FILES.'/files/'.$_SESSION['user']['username'].'/Photos/';
+			if(!is_dir($user_pics))
+				mkdir($user_pics);
+
+			$user_pics = $user_pics.'Avatars/';
+			if(!is_dir($user_pics))
+				mkdir($user_pics);
+
+
+			switch ($action) {
+				case 'takePhoto':
+					if($_POST['src']){
+						$img = date('Y-m-d-H-i-s', $_SERVER['REQUEST_TIME']).'.png';
+						$img = $user_pics.$img;
+
+						$post = base64_decode($_POST['src']);
+
+						$r['success'] = file_put_contents($img, file_get_contents($_POST['src']));
+
+						$this->q()->Update('Users',array(
+							'picture_src' => $img
+						),array(
+							'id' => $_SESSION['user']['id']
+						));
+					}
+				break;
+				
+				default:
+					$picture = "./x/X/xYouMeOS/images/g1.jpg";
+
+					$username = ($_GET['user']) ? $_GET['user'] : $_SESSION['user']['username'];
+
+					$user = $this->q()->Select('picture_src','Users',array(
+						'username'	=> $username
+					));
+
+					if($user[0]['picture_src'] != ''){
+						$picture = $user[0]['picture_src'];
+					}
+
+					//
+					$type =  $this->mime_content_type($picture); 
+					header("Content-type: $type");
+					readfile($picture);
+					// echo file_get_contents($picture);
+					exit;
+				break;
 			}
 
-			//
-			echo file_get_contents($picture);
-			exit;
+			return $r;
 		}
 
 	}
