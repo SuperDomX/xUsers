@@ -1,3 +1,4 @@
+{if $takePhoto}
 <canvas id="takePhotoCanvas" width="320" height="240" class="pull-right img-circle" ></canvas>
 <video id="takePhotoVideo" width="320" height="240" autoplay ></video>
 <script type="text/javascript">
@@ -81,3 +82,43 @@
     }
      
 </script>
+{/if}
+{if $uploadAvatar}
+<script src="js/fileupload.min.js"></script> <!-- File Upload -->
+<script src="/bin/js/jq/jquery.form.js"></script> 
+<form method="post" enctype="multipart/form-data" action="/users/avatar/uploadAvatar/.json">
+    <div class="fileupload fileupload-new" data-provides="fileupload">
+        <div class="fileupload-preview thumbnail form-control"></div>
+        
+        <div>
+            <span class="btn btn-file btn-alt btn-sm">
+                <span class="fileupload-new">Select image</span>
+                <span class="fileupload-exists">Change</span>
+           
+                <input type="file" id="uploadAvatarFile" name="uploadAvatar">
+
+            </span>
+            <a href="" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">Remove</a>
+        </div>
+    </div>
+    </form>
+
+    <script type="text/javascript">  
+    $('#uploadAvatar form').ajaxForm({
+        dataType:  'json',
+        success:    function() { 
+            var src = $('.fileupload img').attr('src');
+            $('.profile-pic').attr({
+                src : src
+            });
+
+            $('.profile-pic img').attr({
+                src : src
+            });
+
+            $('#uploadAvatar').modal('hide');
+        }
+    }); 
+    </script>
+ 
+{/if}

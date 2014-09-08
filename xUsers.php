@@ -4,7 +4,7 @@
  * @author heylisten@xtiv.net
  * @name Users
  * @desc User Management
- * @version v1.1.5
+ * @version v1.1.6
  * @icon Contacts2.png
  * @mini users
  * @link users
@@ -204,8 +204,7 @@
 		}
 
 		function avatar($action=null){
-
-
+			$r[$action] = true;
 
 			$user_pics = SVR_FILES.'/files/'.$_SESSION['user']['username'].'/Photos/';
 			if(!is_dir($user_pics))
@@ -225,6 +224,26 @@
 						$post = base64_decode($_POST['src']);
 
 						$r['success'] = file_put_contents($img, file_get_contents($_POST['src']));
+
+						$this->q()->Update('Users',array(
+							'picture_src' => $img
+						),array(
+							'id' => $_SESSION['user']['id']
+						));
+					}
+				break;
+
+				case 'uploadAvatar':
+					$r['data'] = $_FILES;
+
+					if(isset($_FILES['uploadAvatar'])){
+						$f = $_FILES['uploadAvatar'];
+						$img = $f['name'];
+						$img = $user_pics.$img;
+
+						// $post = base64_decode($_POST['src']);
+
+						$r['success'] = file_put_contents($img, file_get_contents($f['tmp_name']));
 
 						$this->q()->Update('Users',array(
 							'picture_src' => $img
