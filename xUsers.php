@@ -4,7 +4,7 @@
  * @author heylisten@xtiv.net
  * @name Users
  * @desc User Management
- * @version v1.1.7
+ * @version v1.1.8
  * @icon Contacts2.png
  * @mini users
  * @link users
@@ -251,6 +251,14 @@
 							'id' => $_SESSION['user']['id']
 						));
 					}
+				break;
+
+				case 'selectAvatar':
+					$r['success'] = $this->q()->Update('Users',array(
+						'picture_src' => DOC_ROOT.$_POST['src']
+					),array(
+						'id' => $_SESSION['user']['id']
+					));
 				break;
 				
 				default:
