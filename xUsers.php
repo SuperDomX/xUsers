@@ -4,7 +4,7 @@
  * @author heylisten@xtiv.net
  * @name Users
  * @desc User Management
- * @version v1.1.8
+ * @version v1.1.9
  * @icon Contacts2.png
  * @mini users
  * @link users
@@ -113,6 +113,20 @@
 				$sdx->set('user_x',$user_x);
 			}
 
+
+		}
+
+		public function countUsers()
+		{
+			#count number of users
+			$q = $this->q();
+			$t = $q->Select('Count(id) as count','Users')[0]['count'];
+
+			return array(
+				'success' => true,
+				'data'	  => $t,
+				'error'	  => $q->error
+			);
 
 		}
 
