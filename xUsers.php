@@ -4,7 +4,7 @@
  * @author heylisten@xtiv.net
  * @name Users
  * @desc User Management
- * @version v1.1.9
+ * @version v1.2.0
  * @icon Contacts2.png
  * @mini users
  * @link users
@@ -115,6 +115,64 @@
 
 
 		}
+
+		protected function jumbotron()
+		{
+			# code...
+		}
+
+		public function masterList()
+		{
+			$data = $this->users('id,name,price,sku,tags,stock,viewed'); 
+			$data = $data['data']; 
+
+			foreach ($data['inventory'] as $key => $value) {
+				# code...
+				$array = array();
+				foreach ($value as $k => $v) {
+					$array[] = $v;	
+				}
+				$data['inventory'][$key] = $array;
+			}
+
+			return array(
+				'draw'            => 1,
+				'recordsFiltered' => count($data['inventory']),
+				'recordsTotal'    => count($data['inventory']),
+				'data'            => $data['inventory']
+			);
+		}
+
+		public function users($select='*'){ 
+
+			$q = $this->q();
+
+			$l = ( isset($_GET['limit']) ) ? $_GET['limit'] : array(0,10);
+			$l = ( isset($_POST['limit']) ) ? $_POST['limit'] : $l;
+
+			$q->setStartLimit( $l[0], $l[1] );
+
+			// $where = ($username) ? "tags LIKE '%$tag%' AND " : '';
+			$where = null;
+
+			$i = $q->Select($select,'shop_inventory_item',$where." stock > -1" );
+
+			// echo $q->mSql;
+			// exit;
+ 
+
+			return array(
+				'data' => array(
+					'pics'      => $pics,
+					'inventory' => $i,
+					'tags'		=> $t,
+					'total'		=> $this->getTotalItems()
+				),
+				'start' => $l[0]+$l[1],
+				'limit' => $l[1],
+			);
+		}
+
 
 		public function countUsers()
 		{
