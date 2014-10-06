@@ -155,22 +155,13 @@
 			// $where = ($username) ? "tags LIKE '%$tag%' AND " : '';
 			$where = null;
 
-			$i = $q->Select($select,'shop_inventory_item',$where." stock > -1" );
+			$i = $q->Select($select,'Users',$where);
 
 			// echo $q->mSql;
 			// exit;
  
 
-			return array(
-				'data' => array(
-					'pics'      => $pics,
-					'inventory' => $i,
-					'tags'		=> $t,
-					'total'		=> $this->getTotalItems()
-				),
-				'start' => $l[0]+$l[1],
-				'limit' => $l[1],
-			);
+			return $i;
 		}
 
 
