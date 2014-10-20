@@ -4,7 +4,7 @@
  * @author heylisten@xtiv.net
  * @name Users
  * @desc User Management
- * @version v1(2.1)
+ * @version v1(2.2)
  * @icon Contacts2.png
  * @mini users
  * @link users
@@ -325,7 +325,7 @@
 				break;
 				
 				default:
-					$picture = "./x/X/xYouMeOS/images/g1.jpg";
+					$picture = "./x/X/xYouMeOS/images/default-avatar.png";
 
 					$username = ($_GET['user']) ? $_GET['user'] : $_SESSION['user']['username'];
 
