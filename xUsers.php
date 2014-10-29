@@ -227,20 +227,30 @@
 			return $a[0];
 		}
 
+
 		function index(){
-			$this->set('WWW_PAGE','Users');
+
+		}
+
+		function read(){
+
+			$r['HTML']['HEAD']['TITLE'] = 'All Users';
 			// SQL Connection
 			$q = $this->q();
-			$this->set('BODY_VALIGN','top');
+
+			
+
 			// the fields that we want to see are...
 			$q->setStartLimit(0,1);
 			$fields = $q->Select('*','Users');
 			$fields = $fields[0];
+
 			unset($fields['hash']);
 
 			foreach($fields as $k => $v){
 				$f[] = $k;
 			}
+
 			$start = ($_POST['start'])?$_POST['start']:0;
 			$limit = ($_POST['limit'])?$_POST['limit']:0;
 
@@ -254,8 +264,6 @@
 					'header' => ucwords( str_replace('_',' ',$v) ),
 					'id'		=> $v
 				);
-
-
 			}
 
 			// set the datas
@@ -264,7 +272,33 @@
 			$this->set('all_users',	json_encode($all_users)	);
 
 			$this->set('users',	$all_users);
+
+			return $r;
+
+			// $data = $this->inventory('id,name,price,sku,tags,stock,viewed'); 
+			// $data = $data['data']; 
+
+			// foreach ($data['inventory'] as $key => $value) {
+			// 	# code...
+			// 	$array = array();
+			// 	foreach ($value as $k => $v) {
+			// 		$array[] = $v;	
+			// 	}
+			// 	$data['inventory'][$key] = $array;
+			// }
+
+				
+
+			return array(
+				'draw'            => 1,
+				'recordsFiltered' => count($data['inventory']),
+				'recordsTotal'    =>  count($data['inventory']),
+				'data'            => $data['inventory']
+			);
 		}
+
+
+
 
 		function avatar($action=null){
 			$r[$action] = true;
