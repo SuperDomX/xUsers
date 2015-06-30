@@ -2,7 +2,7 @@
 /**
  *
  * @author heylisten@xtiv.net
- * @name Users
+ * @name Passengers
  * @desc User Management
  * @version v1(2.2)
  * @icon Contacts2.png
