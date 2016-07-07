@@ -1,9 +1,9 @@
 <?php
 /**
- * @author heylisten@xtiv.net
- * @name Accounts
+ * @name Users 
  * @desc User Management
  * @version v1(2.2)
+ * @author @xopherdeep
  * @icon Contacts2.png
  * @mini users
  * @link users
