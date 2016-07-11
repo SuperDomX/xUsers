@@ -2,8 +2,8 @@
 /**
  * @name Users 
  * @desc User Management
- * @version v1(2.2)
- * @author @xopherdeep
+    * @version v0.1(160710)
+    * @author  @xopherdeep
  * @icon Contacts2.png
  * @mini users
  * @link users
